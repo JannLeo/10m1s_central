@@ -1,0 +1,331 @@
+From 4ad18e2828cbf817e928daab9f6eb52fe648b806 Mon Sep 17 00:00:00 2001
+From: JunnanLiu <1144097453@qq.com>
+Date: Wed, 18 Jun 2025 09:52:10 +0800
+Subject: [PATCH] multi_sdk
+
+---
+ .../vendor/acl_connection_demo/app.c          |  39 ++++--
+ .../vendor/acl_connection_demo/app.h          |   1 +
+ .../vendor/acl_connection_demo/app_config.h   |   9 +-
+ .../acl_connection_demo/app_conn_test.c       | 113 ++++++++++++++++++
+ .../acl_connection_demo/app_conn_test.h       |  28 +++++
+ .../vendor/acl_connection_demo/main.c         |   2 +
+ 6 files changed, 180 insertions(+), 12 deletions(-)
+ create mode 100644 tl_ble_sdk/vendor/acl_connection_demo/app_conn_test.c
+ create mode 100644 tl_ble_sdk/vendor/acl_connection_demo/app_conn_test.h
+
+diff --git a/tl_ble_sdk/vendor/acl_connection_demo/app.c b/tl_ble_sdk/vendor/acl_connection_demo/app.c
+index 4f3516757..aaf42fce2 100644
+--- a/tl_ble_sdk/vendor/acl_connection_demo/app.c
++++ b/tl_ble_sdk/vendor/acl_connection_demo/app.c
+@@ -33,6 +33,20 @@
+ 
+ _attribute_ble_data_retention_ int central_smp_pending = 0; // SMP: security & encryption;
+ 
++u8 test_target_mac[10][6] = {
++    {0x00, 0x22, 0x33, 0x44, 0x55, 0x66},
++    {0x01, 0x22, 0x33, 0x44, 0x55, 0x66},
++    {0x02, 0x22, 0x33, 0x44, 0x55, 0x66},
++    {0x03, 0x22, 0x33, 0x44, 0x55, 0x66},
++    {0x04, 0x22, 0x33, 0x44, 0x55, 0x66},
++    {0x05, 0x22, 0x33, 0x44, 0x55, 0x66},
++    {0x06, 0x22, 0x33, 0x44, 0x55, 0x66},
++    {0x07, 0x22, 0x33, 0x44, 0x55, 0x66},
++    {0x08, 0x22, 0x33, 0x44, 0x55, 0x66},
++    {0x09, 0x22, 0x33, 0x44, 0x55, 0x66},
++};
++u8 test_target_mac_num = 0;
++#define MAX_TARGET_MAC_NUM 10
+ 
+ /**
+  * @brief   BLE Advertising data
+@@ -92,6 +106,7 @@ const u8 tbl_scanRsp[] = {
+ int AA_dbg_adv_rpt = 0;
+ u32 tick_adv_rpt   = 0;
+ 
++
+ int app_le_adv_report_event_handle(u8 *p)
+ {
+     event_adv_report_t *pa   = (event_adv_report_t *)p;
+@@ -137,19 +152,29 @@ int app_le_adv_report_event_handle(u8 *p)
+ #if (ACL_CENTRAL_SMP_ENABLE)
+     central_auto_connect = blc_smp_searchBondingPeripheralDevice_by_PeerMacAddress(pa->adr_type, pa->mac);
+ #endif
++    //manual pairing by fixed MAC
++    if (memcmp(pa->mac, test_target_mac[test_target_mac_num], 6) == 0) {
++        user_manual_pairing = 1;
++    }
+ 
+     if (central_auto_connect || user_manual_pairing) {
+         /* send create connection command to Controller, trigger it switch to initiating state. After this command, Controller
+-         * will scan all the ADV packets it received but not report to host, to find the specified device(mac_adr_type & mac_adr),
+-         * then send a "CONN_REQ" packet, enter to connection state and send a connection complete event
+-         * (HCI_SUB_EVT_LE_CONNECTION_COMPLETE) to Host*/
++        * will scan all the ADV packets it received but not report to host, to find the specified device(mac_adr_type & mac_adr),
++        * then send a "CONN_REQ" packet, enter to connection state and send a connection complete event
++        * (HCI_SUB_EVT_LE_CONNECTION_COMPLETE) to Host*/
+         u8 status = blc_ll_createConnection(SCAN_INTERVAL_100MS, SCAN_WINDOW_100MS, INITIATE_FP_ADV_SPECIFY, pa->adr_type, pa->mac, OWN_ADDRESS_PUBLIC, CONN_INTERVAL_20MS, CONN_INTERVAL_20MS, 0, CONN_TIMEOUT_4S, 0, 0xFFFF);
+ 
+-
+-        if (status == BLE_SUCCESS) { //create connection success
++        if (status == BLE_SUCCESS ) { //create connection success
+             tlkapi_send_string_data(APP_LOG_EN, "[APP][CMD] create connection success", pa->mac, 6);
++            if(test_target_mac_num >= MAX_TARGET_MAC_NUM){
++                central_auto_connect = 0;
++                user_manual_pairing = 0;
++
++            }
+         }
+     }
++    
++    
+     /*********************** Central Create connection demo code end  *******************************************************/
+ 
+ 
+@@ -167,7 +192,7 @@ int app_le_connection_complete_event_handle(u8 *p)
+ 
+     if (pConnEvt->status == BLE_SUCCESS) {
+         tlkapi_send_string_data(APP_CONTR_EVT_LOG_EN, "[APP][EVT] Connection complete event", &pConnEvt->connHandle, sizeof(hci_le_connectionCompleteEvt_t) - 2);
+-
++        test_target_mac_num++;
+         dev_char_info_insert_by_conn_event(pConnEvt);
+ 
+         if (pConnEvt->role == ACL_ROLE_CENTRAL) {       // central role, process SMP and SDP if necessary
+@@ -840,8 +865,6 @@ _attribute_no_inline_ void user_init_normal(void)
+ 
+ 
+     //////////////////////////// BLE stack Initialization  End //////////////////////////////////
+-
+-
+     //////////////////////////// User Configuration for BLE application ////////////////////////////
+     blc_ll_setAdvData(tbl_advData, sizeof(tbl_advData));
+     blc_ll_setScanRspData(tbl_scanRsp, sizeof(tbl_scanRsp));
+diff --git a/tl_ble_sdk/vendor/acl_connection_demo/app.h b/tl_ble_sdk/vendor/acl_connection_demo/app.h
+index ae281358f..17a2af7ae 100644
+--- a/tl_ble_sdk/vendor/acl_connection_demo/app.h
++++ b/tl_ble_sdk/vendor/acl_connection_demo/app.h
+@@ -24,6 +24,7 @@
+ #ifndef VENDOR_APP_H_
+ #define VENDOR_APP_H_
+ 
++extern u8 test_target_mac_num;
+ 
+ /**
+  * @brief       user initialization when MCU power on or wake_up from deepSleep mode
+diff --git a/tl_ble_sdk/vendor/acl_connection_demo/app_config.h b/tl_ble_sdk/vendor/acl_connection_demo/app_config.h
+index 830f320a4..131cf8ab2 100644
+--- a/tl_ble_sdk/vendor/acl_connection_demo/app_config.h
++++ b/tl_ble_sdk/vendor/acl_connection_demo/app_config.h
+@@ -31,8 +31,8 @@
+ #define ACL_PERIPHR_MAX_NUM 1 // ACL peripheral maximum number
+ 
+ ///////////////////////// Feature Configuration////////////////////////////////////////////////
+-#define ACL_PERIPHR_SMP_ENABLE        1 //1 for smp,  0 no security
+-#define ACL_CENTRAL_SMP_ENABLE        1 //1 for smp,  0 no security
++#define ACL_PERIPHR_SMP_ENABLE        0 //1 for smp,  0 no security
++#define ACL_CENTRAL_SMP_ENABLE        0 //1 for smp,  0 no security
+ #define ACL_CENTRAL_SIMPLE_SDP_ENABLE 1 //simple service discovery for ACL central
+ #define BLE_OTA_SERVER_ENABLE         1
+ 
+@@ -50,7 +50,7 @@
+     #define BLC_PM_EN                     0
+     #define BLC_PM_DEEP_RETENTION_MODE_EN 0
+ #else
+-    #define BLE_APP_PM_ENABLE             1
++    #define BLE_APP_PM_ENABLE             0
+ #endif
+ 
+ /* Flash Protection:
+@@ -93,7 +93,7 @@
+ ///////////////////////// DEBUG  Configuration ////////////////////////////////////////////////
+ #define DEBUG_GPIO_ENABLE     0
+ 
+-#define TLKAPI_DEBUG_ENABLE   0
++#define TLKAPI_DEBUG_ENABLE   1
+ #define TLKAPI_DEBUG_CHANNEL  TLKAPI_DEBUG_CHANNEL_GSUART
+ 
+ #define APP_LOG_EN            1
+@@ -131,5 +131,6 @@
+ 
+ #endif
+ 
++#define TEST_GPIO (GPIO_FC_PA3)
+ 
+ #include "../common/default_config.h"
+diff --git a/tl_ble_sdk/vendor/acl_connection_demo/app_conn_test.c b/tl_ble_sdk/vendor/acl_connection_demo/app_conn_test.c
+new file mode 100644
+index 000000000..7e8f6900c
+--- /dev/null
++++ b/tl_ble_sdk/vendor/acl_connection_demo/app_conn_test.c
+@@ -0,0 +1,113 @@
++/********************************************************************************************************
++ * @file    app_conn_text.c
++ *
++ * @brief   This is the source file for BLE SDK
++ *
++ * @author  BLE GROUP
++ * @date    06,2025
++ *
++ * @par     Copyright (c) 2022, Telink Semiconductor (Shanghai) Co., Ltd. ("TELINK")
++ *
++ *          Licensed under the Apache License, Version 2.0 (the "License");
++ *          you may not use this file except in compliance with the License.
++ *          You may obtain a copy of the License at
++ *
++ *              http://www.apache.org/licenses/LICENSE-2.0
++ *
++ *          Unless required by applicable law or agreed to in writing, software
++ *          distributed under the License is distributed on an "AS IS" BASIS,
++ *          WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ *          See the License for the specific language governing permissions and
++ *          limitations under the License.
++ *
++ *******************************************************************************************************/
++#include "tl_common.h"
++#include "drivers.h"
++#include "stack/ble/ble.h"
++
++
++// #include "app_config.h"
++#include "app.h"
++// #include "app_buffer.h"
++// #include "app_ui.h"
++
++static u16 feature_dle_mode[DEVICE_CHAR_INFO_MAX_NUM];
++static u32 feature_test_tick = 0;
++static u8 app_test_data[20];  // 定义一个长度为20的字节数组
++u16 dataLen = 20;
++#define PWM_CMD_OUT_DP_H 61
++
++bool judge_conn_State(){
++    for(int i=0;i<ACL_CENTRAL_MAX_NUM;i++){
++        if(conn_dev_list[i].conn_state == false){
++            test_target_mac_num = i;
++            return false;
++        }
++    }
++    return true;
++}
++void app_conn_test_mainloop(void)
++{
++    u16 connHandle;
++    static u16 send_cnt =0;
++    gpio_function_en(TEST_GPIO);
++    gpio_output_en(TEST_GPIO);
++    gpio_input_dis(TEST_GPIO);       // 禁用输入
++
++    // loop for all device
++    static u32 tick_loop= 0;
++    if(!judge_conn_State()){
++        memset(app_test_data, 0x01, dataLen);
++        for (u8 i = 0; i < (DEVICE_CHAR_INFO_MAX_NUM); i++) {
++            // check connect state
++            if (conn_dev_list[i].conn_state == 1) {                                   //connect state
++                connHandle = conn_dev_list[i].conn_handle;
++                //send data to peer device
++                if (i < ACL_CENTRAL_MAX_NUM) {
++                    u8  ret_val = BLE_SUCCESS;
++                    if(i == 0 && conn_dev_list[ACL_CENTRAL_MAX_NUM - 1].conn_state == 1){
++                        gpio_set_high_level(TEST_GPIO);
++                    }else{
++                        gpio_set_low_level(TEST_GPIO);
++                    }
++                    //0x0039 is the handle value of the current test ACL Peripheral, which can be modified by the client according to their actual situation
++                    ret_val = blc_gatt_pushWriteCommand(connHandle, PWM_CMD_OUT_DP_H, app_test_data, dataLen);
++                    // tlkapi_printf(APP_LOG_EN, "[APP][GATT] blc_gatt_pushWriteCommand     connHandle:%04X status:%02X", connHandle, ret_val);
++
++                }
++            }
++        }
++    }
++    else if(clock_time_exceed(tick_loop,2*1000000)){
++        tick_loop = clock_time();
++        send_cnt++;
++        if (send_cnt%2) {
++            memset(app_test_data, 0x01, dataLen);  // 填充数据为 1
++        } else {
++            memset(app_test_data, 0x00, dataLen);  // 填充数据为 0
++        }
++        for (u8 i = 0; i < (DEVICE_CHAR_INFO_MAX_NUM); i++) {
++            // check connect state
++            // 使用 memset 填充数据
++            if (conn_dev_list[i].conn_state == 1) {                                   //connect state
++                connHandle = conn_dev_list[i].conn_handle;
++                //send data to peer device
++                if (i < ACL_CENTRAL_MAX_NUM) {
++                    u8  ret_val = BLE_SUCCESS;
++                    if(i == 0 && conn_dev_list[ACL_CENTRAL_MAX_NUM - 1].conn_state == 1){
++                        gpio_set_high_level(TEST_GPIO);
++                    }else{
++                        gpio_set_low_level(TEST_GPIO);
++                    }
++                    //0x0039 is the handle value of the current test ACL Peripheral, which can be modified by the client according to their actual situation
++                    ret_val = blc_gatt_pushWriteCommand(connHandle, PWM_CMD_OUT_DP_H, app_test_data, dataLen);
++                    // tlkapi_printf(APP_LOG_EN, "[APP][GATT] blc_gatt_pushWriteCommand     connHandle:%04X status:%02X", connHandle, ret_val);
++
++                }
++            }
++        }
++    }
++    
++    return;
++    
++}
+diff --git a/tl_ble_sdk/vendor/acl_connection_demo/app_conn_test.h b/tl_ble_sdk/vendor/acl_connection_demo/app_conn_test.h
+new file mode 100644
+index 000000000..14858eb87
+--- /dev/null
++++ b/tl_ble_sdk/vendor/acl_connection_demo/app_conn_test.h
+@@ -0,0 +1,28 @@
++/********************************************************************************************************
++ * @file    app_conn_text.h
++ *
++ * @brief   This is the header file for BLE SDK
++ *
++ * @author  BLE GROUP
++ * @date    06,2025
++ *
++ * @par     Copyright (c) 2022, Telink Semiconductor (Shanghai) Co., Ltd. ("TELINK")
++ *
++ *          Licensed under the Apache License, Version 2.0 (the "License");
++ *          you may not use this file except in compliance with the License.
++ *          You may obtain a copy of the License at
++ *
++ *              http://www.apache.org/licenses/LICENSE-2.0
++ *
++ *          Unless required by applicable law or agreed to in writing, software
++ *          distributed under the License is distributed on an "AS IS" BASIS,
++ *          WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ *          See the License for the specific language governing permissions and
++ *          limitations under the License.
++ *
++ *******************************************************************************************************/
++#ifndef APP_CONN_TEST_H_
++#define APP_CONN_TEST_H_
++
++void app_conn_test_mainloop(void);
++#endif
+\ No newline at end of file
+diff --git a/tl_ble_sdk/vendor/acl_connection_demo/main.c b/tl_ble_sdk/vendor/acl_connection_demo/main.c
+index 6482881f0..5587e5ad4 100644
+--- a/tl_ble_sdk/vendor/acl_connection_demo/main.c
++++ b/tl_ble_sdk/vendor/acl_connection_demo/main.c
+@@ -26,6 +26,7 @@
+ #include "stack/ble/ble.h"
+ #include "app.h"
+ #include "app_config.h"
++#include "app_conn_test.h"
+ 
+ #if (FREERTOS_ENABLE)
+     #include "tlk_riscv.h"
+@@ -157,6 +158,7 @@ _attribute_ram_code_ int main(void)
+ 
+     while (1) {
+         main_loop();
++        app_conn_test_mainloop();
+     }
+ 
+ #endif
+-- 
+2.47.1.windows.2
+

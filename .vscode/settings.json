@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "app_buffer.h": "c",
+        "app.h": "c",
+        "app_config.h": "c",
+        "ble.h": "c",
+        "app_att.h": "c",
+        "tl_common.h": "c"
+    }
+}
