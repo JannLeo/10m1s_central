@@ -149,8 +149,6 @@ index 830f320a4..131cf8ab2 100644
  
  #endif
  
-+#define TEST_GPIO (GPIO_FC_PA3)
- 
  #include "../common/default_config.h"
 diff --git a/tl_ble_sdk/vendor/acl_connection_demo/app_conn_test.c b/tl_ble_sdk/vendor/acl_connection_demo/app_conn_test.c
 new file mode 100644
@@ -210,9 +208,6 @@ index 000000000..7e8f6900c
 +{
 +    u16 connHandle;
 +    static u16 send_cnt =0;
-+    gpio_function_en(TEST_GPIO);
-+    gpio_output_en(TEST_GPIO);
-+    gpio_input_dis(TEST_GPIO);       // 禁用输入
 +
 +    // loop for all device
 +    static u32 tick_loop= 0;
@@ -225,11 +220,6 @@ index 000000000..7e8f6900c
 +                //send data to peer device
 +                if (i < ACL_CENTRAL_MAX_NUM) {
 +                    u8  ret_val = BLE_SUCCESS;
-+                    if(i == 0 && conn_dev_list[ACL_CENTRAL_MAX_NUM - 1].conn_state == 1){
-+                        gpio_set_high_level(TEST_GPIO);
-+                    }else{
-+                        gpio_set_low_level(TEST_GPIO);
-+                    }
 +                    //0x0039 is the handle value of the current test ACL Peripheral, which can be modified by the client according to their actual situation
 +                    ret_val = blc_gatt_pushWriteCommand(connHandle, PWM_CMD_OUT_DP_H, app_test_data, dataLen);
 +                    // tlkapi_printf(APP_LOG_EN, "[APP][GATT] blc_gatt_pushWriteCommand     connHandle:%04X status:%02X", connHandle, ret_val);
@@ -248,17 +238,11 @@ index 000000000..7e8f6900c
 +        }
 +        for (u8 i = 0; i < (DEVICE_CHAR_INFO_MAX_NUM); i++) {
 +            // check connect state
-+            // 使用 memset 填充数据
 +            if (conn_dev_list[i].conn_state == 1) {                                   //connect state
 +                connHandle = conn_dev_list[i].conn_handle;
 +                //send data to peer device
 +                if (i < ACL_CENTRAL_MAX_NUM) {
 +                    u8  ret_val = BLE_SUCCESS;
-+                    if(i == 0 && conn_dev_list[ACL_CENTRAL_MAX_NUM - 1].conn_state == 1){
-+                        gpio_set_high_level(TEST_GPIO);
-+                    }else{
-+                        gpio_set_low_level(TEST_GPIO);
-+                    }
 +                    //0x0039 is the handle value of the current test ACL Peripheral, which can be modified by the client according to their actual situation
 +                    ret_val = blc_gatt_pushWriteCommand(connHandle, PWM_CMD_OUT_DP_H, app_test_data, dataLen);
 +                    // tlkapi_printf(APP_LOG_EN, "[APP][GATT] blc_gatt_pushWriteCommand     connHandle:%04X status:%02X", connHandle, ret_val);

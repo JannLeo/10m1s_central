@@ -162,7 +162,7 @@ int app_le_adv_report_event_handle(u8 *p)
         * will scan all the ADV packets it received but not report to host, to find the specified device(mac_adr_type & mac_adr),
         * then send a "CONN_REQ" packet, enter to connection state and send a connection complete event
         * (HCI_SUB_EVT_LE_CONNECTION_COMPLETE) to Host*/
-        u8 status = blc_ll_createConnection(SCAN_INTERVAL_100MS, SCAN_WINDOW_100MS, INITIATE_FP_ADV_SPECIFY, pa->adr_type, pa->mac, OWN_ADDRESS_PUBLIC, CONN_INTERVAL_20MS, CONN_INTERVAL_20MS, 0, CONN_TIMEOUT_4S, 0, 0xFFFF);
+        u8 status = blc_ll_createConnection(SCAN_INTERVAL_100MS, SCAN_WINDOW_100MS, INITIATE_FP_ADV_SPECIFY, pa->adr_type, pa->mac, OWN_ADDRESS_PUBLIC, CONN_INTERVAL_15MS, CONN_INTERVAL_15MS, 0, CONN_TIMEOUT_4S, 0, 0xFFFF);
 
         if (status == BLE_SUCCESS ) { //create connection success
             tlkapi_send_string_data(APP_LOG_EN, "[APP][CMD] create connection success", pa->mac, 6);
@@ -768,7 +768,7 @@ _attribute_no_inline_ void user_init_normal(void)
     /* ACL Peripheral TX FIFO */
     blc_ll_initAclPeriphrTxFifo(app_acl_per_tx_fifo, ACL_PERIPHR_TX_FIFO_SIZE, ACL_PERIPHR_TX_FIFO_NUM, ACL_PERIPHR_MAX_NUM);
 
-    blc_ll_setAclCentralBaseConnectionInterval(CONN_INTERVAL_16P25MS);
+    blc_ll_setAclCentralBaseConnectionInterval(CONN_INTERVAL_12P5MS);
 
 
     //////////// LinkLayer Initialization  End /////////////////////////
@@ -868,7 +868,7 @@ _attribute_no_inline_ void user_init_normal(void)
     //////////////////////////// User Configuration for BLE application ////////////////////////////
     blc_ll_setAdvData(tbl_advData, sizeof(tbl_advData));
     blc_ll_setScanRspData(tbl_scanRsp, sizeof(tbl_scanRsp));
-    blc_ll_setAdvParam(ADV_INTERVAL_50MS, ADV_INTERVAL_50MS, ADV_TYPE_CONNECTABLE_UNDIRECTED, OWN_ADDRESS_PUBLIC, 0, NULL, BLT_ENABLE_ADV_ALL, ADV_FP_NONE);
+    blc_ll_setAdvParam(ADV_INTERVAL_15MS, ADV_INTERVAL_15MS, ADV_TYPE_CONNECTABLE_UNDIRECTED, OWN_ADDRESS_PUBLIC, 0, NULL, BLT_ENABLE_ADV_ALL, ADV_FP_NONE);
     blc_ll_setAdvEnable(BLC_ADV_ENABLE); //ADV enable
 
     blc_ll_setScanParameter(SCAN_TYPE_PASSIVE, SCAN_INTERVAL_100MS, SCAN_WINDOW_100MS, OWN_ADDRESS_PUBLIC, SCAN_FP_ALLOW_ADV_ANY);
