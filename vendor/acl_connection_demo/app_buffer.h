@@ -85,7 +85,7 @@
  *    so when ACL TX FIFO size equal to or bigger than 256, ACL TX FIFO number can only be 9(can not use 17 or 33), cause 256*(17-1)=4096
  */
 #define ACL_CENTRAL_TX_FIFO_SIZE CAL_LL_ACL_TX_FIFO_SIZE(ACL_CENTRAL_MAX_TX_OCTETS) //user can not change !!!
-#define ACL_CENTRAL_TX_FIFO_NUM  9                                                  //user set value
+#define ACL_CENTRAL_TX_FIFO_NUM  17                                                  //user set value
 
 #define ACL_PERIPHR_TX_FIFO_SIZE CAL_LL_ACL_TX_FIFO_SIZE(ACL_PERIPHR_MAX_TX_OCTETS) //user can not change !!!
 #define ACL_PERIPHR_TX_FIFO_NUM  9                                                  //user set value

@@ -132,5 +132,5 @@
 #endif
 
 #define TEST_GPIO (GPIO_FC_PA3)
-
+#define TEST_GPIO1 (GPIO_FC_PA4)
 #include "../common/default_config.h"

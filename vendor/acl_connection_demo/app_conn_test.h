@@ -25,4 +25,5 @@
 #define APP_CONN_TEST_H_
 
 void app_conn_test_mainloop(void);
+_attribute_ram_code_ int app_acl_central_post_event_callback(void);
 #endif

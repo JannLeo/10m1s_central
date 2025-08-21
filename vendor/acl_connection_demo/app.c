@@ -29,7 +29,7 @@
 #include "app_buffer.h"
 #include "app_att.h"
 #include "app_ui.h"
-
+#include "app_conn_test.h"
 
 _attribute_ble_data_retention_ int central_smp_pending = 0; // SMP: security & encryption;
 
@@ -246,7 +246,7 @@ int app_disconnect_event_handle(u8 *p)
 {
     hci_disconnectionCompleteEvt_t *pDisConn = (hci_disconnectionCompleteEvt_t *)p;
     tlkapi_send_string_data(APP_CONTR_EVT_LOG_EN, "[APP][EVT] disconnect event", &pDisConn->connHandle, 3);
-
+    test_target_mac_num--;
     //terminate reason
     if (pDisConn->reason == HCI_ERR_CONN_TIMEOUT) {                 //connection timeout
 
@@ -768,7 +768,7 @@ _attribute_no_inline_ void user_init_normal(void)
     /* ACL Peripheral TX FIFO */
     blc_ll_initAclPeriphrTxFifo(app_acl_per_tx_fifo, ACL_PERIPHR_TX_FIFO_SIZE, ACL_PERIPHR_TX_FIFO_NUM, ACL_PERIPHR_MAX_NUM);
 
-    blc_ll_setAclCentralBaseConnectionInterval(CONN_INTERVAL_12P5MS);
+    blc_ll_setAclCentralBaseConnectionInterval(CONN_INTERVAL_15MS);
 
 
     //////////// LinkLayer Initialization  End /////////////////////////
@@ -870,11 +870,11 @@ _attribute_no_inline_ void user_init_normal(void)
     blc_ll_setScanRspData(tbl_scanRsp, sizeof(tbl_scanRsp));
     blc_ll_setAdvParam(ADV_INTERVAL_15MS, ADV_INTERVAL_15MS, ADV_TYPE_CONNECTABLE_UNDIRECTED, OWN_ADDRESS_PUBLIC, 0, NULL, BLT_ENABLE_ADV_ALL, ADV_FP_NONE);
     blc_ll_setAdvEnable(BLC_ADV_ENABLE); //ADV enable
-
+    blc_ll_initChannelSelectionAlgorithm_2_feature();
     blc_ll_setScanParameter(SCAN_TYPE_PASSIVE, SCAN_INTERVAL_100MS, SCAN_WINDOW_100MS, OWN_ADDRESS_PUBLIC, SCAN_FP_ALLOW_ADV_ANY);
     blc_ll_setScanEnable(BLC_SCAN_ENABLE, DUP_FILTER_DISABLE);
 
-    rf_set_power_level_index(RF_POWER_P3dBm);
+     rf_set_power_level_index(RF_POWER_INDEX_P11p33dBm);
 
 #if (BLE_APP_PM_ENABLE)
     blc_ll_initPowerManagement_module();
@@ -890,6 +890,11 @@ _attribute_no_inline_ void user_init_normal(void)
     blc_ota_initOtaServer_module();
 #endif
 
+    extern void blc_ll_register_post_event_callback(void *p);
+    blc_ll_register_post_event_callback(app_acl_central_post_event_callback);
+    gpio_function_en(TEST_GPIO);
+    gpio_output_en(TEST_GPIO);
+    gpio_input_dis(TEST_GPIO);       // 禁用输入
     tlkapi_send_string_data(APP_LOG_EN, "[APP][INI] acl connection demo init", 0, 0);
     ////////////////////////////////////////////////////////////////////////////////////////////////
 }
