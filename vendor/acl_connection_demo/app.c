@@ -46,7 +46,7 @@ u8 test_target_mac[10][6] = {
     {0x09, 0x22, 0x33, 0x44, 0x55, 0x66},
 };
 u8 test_target_mac_num = 0;
-#define MAX_TARGET_MAC_NUM 10
+#define MAX_TARGET_MAC_NUM 1
 
 /**
  * @brief   BLE Advertising data
