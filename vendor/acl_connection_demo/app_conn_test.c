@@ -31,7 +31,7 @@
 // #include "app_buffer.h"
 // #include "app_ui.h"
 
-static u16 feature_dle_mode[DEVICE_CHAR_INFO_MAX_NUM];
+static u16 feature_dle_mode[MAX_TARGET_MAC_NUM];
 static u32 feature_test_tick = 0;
 u16 dataLen = 20;
 bool flag = 0;
@@ -46,7 +46,7 @@ static uint8_t app_test_data[2][20] = {
 volatile bool xor_flag = 0;
 volatile bool conn_flag = false;
 bool judge_conn_State(){
-    for(int i=0;i<ACL_CENTRAL_MAX_NUM;i++){
+    for(int i=0;i<MAX_TARGET_MAC_NUM;i++){
         if(conn_dev_list[i].conn_state == false){
             test_target_mac_num = i;
             return true;
@@ -61,10 +61,12 @@ int app_acl_central_post_event_callback(void){
         send_num++;
         flag = !flag;
         extern ble_sts_t blc_ll_clear_central_tx_fifo(u16 connHandle);
-        for(int i = 0; i < DEVICE_CHAR_INFO_MAX_NUM; i++) {
+        for(int i = 0; i < MAX_TARGET_MAC_NUM; i++) {
             if(conn_dev_list[i].conn_state == 1) {
-                blc_ll_clear_central_tx_fifo(conn_dev_list[i].conn_handle);
-                // int n = blc_ll_getTxFifoNumber(conn_dev_list[i].conn_handle);
+                int n = blc_ll_getTxFifoNumber(conn_dev_list[i].conn_handle);
+                if(n >= 2){
+                    blc_ll_clear_central_tx_fifo(conn_dev_list[i].conn_handle);
+                }
                 ble_sts_t status = blc_gatt_pushWriteCommand(conn_dev_list[i].conn_handle, PWM_CMD_OUT_DP_H, app_test_data[flag], dataLen);
             }
         }
