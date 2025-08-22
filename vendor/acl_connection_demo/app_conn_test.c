@@ -31,7 +31,7 @@
 // #include "app_buffer.h"
 // #include "app_ui.h"
 
-static u16 feature_dle_mode[DEVICE_CHAR_INFO_MAX_NUM];
+static u16 feature_dle_mode[MAX_TARGET_MAC_NUM];
 static u32 feature_test_tick = 0;
 u16 dataLen = 20;
 u16 array_pos = 0;
@@ -63,7 +63,7 @@ int app_acl_central_post_event_callback(void){
         gpio_set_high_level(TEST_GPIO);
         
         extern ble_sts_t blc_ll_clear_central_tx_fifo(u16 connHandle);
-        for(int i = 0; i < DEVICE_CHAR_INFO_MAX_NUM; i++) {
+        for(int i = 0; i < MAX_TARGET_MAC_NUM; i++) {
             if(conn_dev_list[i].conn_state == 1) {
                 
                 int n = blc_ll_getTxFifoNumber(conn_dev_list[i].conn_handle);
