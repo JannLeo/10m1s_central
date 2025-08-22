@@ -36,7 +36,6 @@ static u32 feature_test_tick = 0;
 u16 dataLen = 20;
 u16 array_pos = 0;
 bool pwm_dir_flag = true;
-bool send_flag = true;
 u32 send_num = 0;
 #define PWM_CMD_OUT_DP_H 61
 static uint8_t app_test_data[5][20] = {
@@ -60,9 +59,8 @@ bool judge_conn_State(){
 }
 _attribute_ram_code_
 int app_acl_central_post_event_callback(void){
-    if(conn_flag && xor_flag && send_flag){
+    if(conn_flag && xor_flag){
         gpio_set_high_level(TEST_GPIO);
-        send_num++;
         
         extern ble_sts_t blc_ll_clear_central_tx_fifo(u16 connHandle);
         for(int i = 0; i < DEVICE_CHAR_INFO_MAX_NUM; i++) {
@@ -85,9 +83,7 @@ int app_acl_central_post_event_callback(void){
 
         xor_flag = false;
         gpio_set_low_level(TEST_GPIO);
-        if(send_num >= 1000){
-            send_flag = false;
-        }
+
 
     }
     else{
