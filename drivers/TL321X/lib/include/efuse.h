@@ -24,7 +24,7 @@
 #ifndef EFUSE_H_
 #define EFUSE_H_
 
-#define ADC_CALIB_EN 0
+#define ADC_CALIB_EN 1
 #if ADC_CALIB_EN
 typedef struct
 {

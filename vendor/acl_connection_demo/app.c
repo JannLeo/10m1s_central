@@ -30,7 +30,7 @@
 #include "app_att.h"
 #include "app_ui.h"
 #include "app_conn_test.h"
-
+#include "app_codec.h"
 _attribute_ble_data_retention_ int central_smp_pending = 0; // SMP: security & encryption;
 
 u8 test_target_mac[10][6] = {
@@ -895,6 +895,7 @@ _attribute_no_inline_ void user_init_normal(void)
     gpio_function_en(TEST_GPIO);
     gpio_output_en(TEST_GPIO);
     gpio_input_dis(TEST_GPIO);       // 禁用输入
+    user_init_codec();
     tlkapi_send_string_data(APP_LOG_EN, "[APP][INI] acl connection demo init", 0, 0);
     ////////////////////////////////////////////////////////////////////////////////////////////////
 }

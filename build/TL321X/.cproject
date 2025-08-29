@@ -294,13 +294,15 @@
 								</option>
 								<option id="ilg.gnumcueclipse.managedbuild.cross.riscv.option.assembler.other" name="Other assembler flags" superClass="ilg.gnumcueclipse.managedbuild.cross.riscv.option.assembler.other" useByScannerDiscovery="false" value="-c -fmessage-length=0 -fno-builtin -fomit-frame-pointer -fno-strict-aliasing -fshort-wchar -fuse-ld=bfd -fpack-struct -fno-jump-tables" valueType="string"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="ilg.gnumcueclipse.managedbuild.cross.riscv.option.assembler.include.paths" name="Include paths (-I)" superClass="ilg.gnumcueclipse.managedbuild.cross.riscv.option.assembler.include.paths" useByScannerDiscovery="true" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendor/common/common/common/calibration}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendor/common}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/drivers}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/3rd-party/freertos-V5/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/3rd-party/freertos-V5/portable/GCC/RISC-V}&quot;"/>
 									<listOptionValue builtIn="false" value="../../.."/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/common}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendor/common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendor/common/common/common}&quot;"/>
 								</option>
 								<inputType id="ilg.gnumcueclipse.managedbuild.cross.riscv.tool.assembler.input" superClass="ilg.gnumcueclipse.managedbuild.cross.riscv.tool.assembler.input"/>
 							</tool>
@@ -310,13 +312,15 @@
 									<listOptionValue builtIn="false" value="CHIP_TYPE=CHIP_TYPE_TL321X"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="ilg.gnumcueclipse.managedbuild.cross.riscv.option.c.compiler.include.paths" name="Include paths (-I)" superClass="ilg.gnumcueclipse.managedbuild.cross.riscv.option.c.compiler.include.paths" useByScannerDiscovery="true" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendor/common/common/common/calibration}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendor/common/common/common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendor/common}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/drivers}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/3rd-party/freertos-V5/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/3rd-party/freertos-V5/portable/GCC/RISC-V}&quot;"/>
 									<listOptionValue builtIn="false" value="../../.."/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/common}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendor/common}&quot;"/>
 								</option>
 								<option id="ilg.gnumcueclipse.managedbuild.cross.riscv.option.c.compiler.std" name="Language standard" superClass="ilg.gnumcueclipse.managedbuild.cross.riscv.option.c.compiler.std" useByScannerDiscovery="true" value="ilg.gnumcueclipse.managedbuild.cross.riscv.option.c.compiler.std.default" valueType="enumerated"/>
 								<option id="ilg.gnumcueclipse.managedbuild.cross.riscv.option.c.compiler.other" name="Other compiler flags" superClass="ilg.gnumcueclipse.managedbuild.cross.riscv.option.c.compiler.other" useByScannerDiscovery="true" value="-c -fmessage-length=0 -fno-builtin -fomit-frame-pointer -fno-strict-aliasing -fshort-wchar -fuse-ld=bfd -fpack-struct -fno-jump-tables -fno-fat-lto-objects" valueType="string"/>
@@ -407,7 +411,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="vendor/2p4g_tpll|vendor/2p4g_feature_test|vendor/2p4g_gen_fsk|3rd-party|boot/B92|drivers/B92|drivers/TL721X|boot/TL721X|boot/B95|drivers/B95|vendor/feature_test|vendor/ble_controller|vendor/product_cis_source|vendor/product_cis_sink|vendor/product_bis_source|vendor/product_bis_sink|algorithm/audio_alg|algorithm/lc3/gcc7|vendor/broadcast_sender|vendor/broadcast_receiver|vendor/cis_peripheral|vendor/cis_central|vendor/feature_demo|vendor/internal_test|vendor/acl_peripheral_demo|vendor/acl_central_demo|vendor/audio_broadcast_assistant|vendor/audio_broadcast_source|vendor/audio_broadcast_sink|vendor/audio_unicast_server|vendor/audio_unicast_client|boot/B91|drivers/B91|vendor/BQB_controller|src/boot.c|div_mod.S|usbstd" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="vendor/common/common/TL321X|vendor/2p4g_tpll|vendor/2p4g_feature_test|vendor/2p4g_gen_fsk|3rd-party|boot/B92|drivers/B92|drivers/TL721X|boot/TL721X|boot/B95|drivers/B95|vendor/feature_test|vendor/ble_controller|vendor/product_cis_source|vendor/product_cis_sink|vendor/product_bis_source|vendor/product_bis_sink|algorithm/audio_alg|algorithm/lc3/gcc7|vendor/broadcast_sender|vendor/broadcast_receiver|vendor/cis_peripheral|vendor/cis_central|vendor/feature_demo|vendor/internal_test|vendor/acl_peripheral_demo|vendor/acl_central_demo|vendor/audio_broadcast_assistant|vendor/audio_broadcast_source|vendor/audio_broadcast_sink|vendor/audio_unicast_server|vendor/audio_unicast_client|boot/B91|drivers/B91|vendor/BQB_controller|src/boot.c|div_mod.S|usbstd" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

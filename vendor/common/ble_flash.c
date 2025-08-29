@@ -26,24 +26,7 @@
 #include "ble_flash.h"
 #include "stack/ble/ble.h"
 
-/**
- * @brief   BLE parameters on flash
- */
-typedef struct __attribute__((packed))
-{
-    u8 cap_frqoffset_en;
-    u8 cap_frqoffset_value;
 
-} nv_para_t;
-
-/**
- * @brief   flash voltage definition
- */
-typedef enum
-{
-    USER_CALIB_FROM_FLASH = 0x01,
-    USER_CALIB_FROM_OTP   = 0x02,
-} user_calib_from_e;
 
 _attribute_data_retention_ nv_para_t blc_nvParam;
 

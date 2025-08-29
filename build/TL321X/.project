@@ -140,5 +140,10 @@
 			<type>2</type>
 			<locationURI>PARENT-2-PROJECT_LOC/vendor</locationURI>
 		</link>
+		<link>
+			<name>vendor/common/common/common/calibration</name>
+			<type>2</type>
+			<location>D:/work/summary-for-work/Telink/workspace/tl_ble_sdk/vendor/common/common/TL321X/calibration</location>
+		</link>
 	</linkedResources>
 </projectDescription>

@@ -36,8 +36,25 @@
 #ifndef APP_FLASH_INIT_LOG_EN
     #define APP_FLASH_INIT_LOG_EN 0
 #endif
+/**
+ * @brief   BLE parameters on flash
+ */
+typedef struct __attribute__((packed))
+{
+    u8 cap_frqoffset_en;
+    u8 cap_frqoffset_value;
 
+} nv_para_t;
 
+/**
+ * @brief   flash voltage definition
+ */
+typedef enum
+{
+    USER_CALIB_FROM_FLASH = 0x01,
+    USER_CALIB_FROM_OTP   = 0x02,
+} user_calib_from_e;
+unsigned char user_calib_freq_offset(user_calib_from_e velfrom, unsigned int addr);
 /**
  * @brief   Flash using area default Configuration, user can change some of them in app_config.h
  *          CFG_ADR_MAC:          BLE MAC address stored in flash, can not change this value

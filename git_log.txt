@@ -1,0 +1,4 @@
+telink: tl321x: enable audio calibration and add codec initialization
+
+- change ADC_CALIB_EN from 0 to 1 to fit codec calibration
+- add codec initialization in user_init_normal() and main_loop_codec()

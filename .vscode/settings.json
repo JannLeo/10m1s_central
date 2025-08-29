@@ -5,6 +5,12 @@
         "app_config.h": "c",
         "ble.h": "c",
         "app_att.h": "c",
-        "tl_common.h": "c"
+        "tl_common.h": "c",
+        "app_codec.h": "c",
+        "printf.h": "c",
+        "calibration.h": "c",
+        "driver.h": "c",
+        "ble_flash.h": "c",
+        "efuse.h": "c"
     }
 }
