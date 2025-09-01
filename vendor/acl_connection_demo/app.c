@@ -31,6 +31,7 @@
 #include "app_ui.h"
 #include "app_conn_test.h"
 #include "app_codec.h"
+#include "app_record_test.h"
 _attribute_ble_data_retention_ int central_smp_pending = 0; // SMP: security & encryption;
 
 u8 test_target_mac[10][6] = {

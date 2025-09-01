@@ -94,7 +94,9 @@
 #define DEBUG_GPIO_ENABLE     0
 
 #define TLKAPI_DEBUG_ENABLE   1
-#define TLKAPI_DEBUG_CHANNEL  TLKAPI_DEBUG_CHANNEL_GSUART
+#define TLKAPI_DEBUG_CHANNEL  TLKAPI_DEBUG_CHANNEL_UART
+// 建议加深 FIFO：
+#define TLKAPI_DEBUG_FIFO_NUM            32       // 必须是 2 的幂
 
 #define APP_LOG_EN            1
 #define APP_FLASH_INIT_LOG_EN 1
@@ -132,5 +134,5 @@
 #endif
 
 #define TEST_GPIO (GPIO_FC_PA3)
-#define TEST_GPIO1 (GPIO_FC_PA4)
+
 #include "../common/default_config.h"

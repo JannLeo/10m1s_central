@@ -28,6 +28,7 @@
 #include "app_config.h"
 #include "app_conn_test.h"
 #include "app_codec.h"
+#include "app_record_test.h"
 #if (FREERTOS_ENABLE)
     #include "tlk_riscv.h"
     #include <FreeRTOS.h>
@@ -159,7 +160,9 @@ _attribute_ram_code_ int main(void)
     while (1) {
         main_loop();
         main_loop_codec();
+        main_loop_record_test();
         app_conn_test_mainloop();
+        
     }
 
 #endif

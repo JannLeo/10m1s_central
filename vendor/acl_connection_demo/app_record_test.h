@@ -1,12 +1,12 @@
 /********************************************************************************************************
- * @file    ctb_app_config.h
+ * @file    app_record_text.h
  *
- * @brief   This is the header file for Telink RISC-V MCU
+ * @brief   This is the header file for BLE SDK
  *
- * @author  Driver Group
- * @date    2023
+ * @author  BLE GROUP
+ * @date    06,2025
  *
- * @par     Copyright (c) 2023, Telink Semiconductor (Shanghai) Co., Ltd. ("TELINK")
+ * @par     Copyright (c) 2022, Telink Semiconductor (Shanghai) Co., Ltd. ("TELINK")
  *
  *          Licensed under the Apache License, Version 2.0 (the "License");
  *          you may not use this file except in compliance with the License.
@@ -21,5 +21,15 @@
  *          limitations under the License.
  *
  *******************************************************************************************************/
-#pragma once
-#include "driver.h"
+#ifndef APP_RECORD_TEST_H_
+#define APP_RECORD_TEST_H_
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void main_loop_record_test(void);
+void button_irq_init(void);
+#ifdef __cplusplus
+}
+#endif
+#endif /* APP_RECORD_TEST_H_ */

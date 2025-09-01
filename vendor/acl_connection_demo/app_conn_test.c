@@ -4,7 +4,7 @@
  * @brief   BLE connection test module source file
  *
  * @author  BLE GROUP
- * @date    06,2025
+ * @date    08,2025
  *
  * @par     Copyright (c) 2022, Telink Semiconductor (Shanghai) Co., Ltd. ("TELINK")
  *

@@ -11,6 +11,15 @@
         "calibration.h": "c",
         "driver.h": "c",
         "ble_flash.h": "c",
-        "efuse.h": "c"
+        "efuse.h": "c",
+        "app_record_test.h": "c",
+        "audio_common.h": "c",
+        "adc_app_config_1v1.h": "c",
+        "uart.h": "c",
+        "audio.h": "c",
+        "drivers.h": "c",
+        "flash.h": "c",
+        "hal_flash.h": "c",
+        "flash_base.h": "c"
     }
 }

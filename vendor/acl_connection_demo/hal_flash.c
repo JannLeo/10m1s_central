@@ -23,7 +23,7 @@
  *******************************************************************************************************/
 #include "hal_flash.h"
 
-#if defined(MCU_CORE_B91) || defined(MCU_CORE_B92) || defined(MCU_CORE_TL321X) || defined(MCU_CORE_TL323X)
+#if defined(MCU_CORE_B91) || defined(MCU_CORE_B92) || defined(MCU_CORE_TL321X)
 
 
 extern const flash_hal_handler_t flash_list[];
@@ -135,7 +135,7 @@ unsigned char hal_flash_unlock(void)
     }
     return 3;
 }
-#elif defined(MCU_CORE_TL7518) || defined(MCU_CORE_TL751X) || defined(MCU_CORE_TL753X) || defined(MCU_CORE_TL721X) || defined(MCU_CORE_TL322X) || defined(MCU_CORE_W92)
+#elif defined(MCU_CORE_TL7518) || defined(MCU_CORE_TL751X) || defined(MCU_CORE_TL721X) || defined(MCU_CORE_TL322X) || defined(MCU_CORE_W92)
 
 
 extern const flash_hal_handler_t flash_list[];
