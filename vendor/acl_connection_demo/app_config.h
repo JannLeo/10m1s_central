@@ -29,13 +29,12 @@
 
 #define ACL_CENTRAL_MAX_NUM 10 // ACL central maximum number
 #define ACL_PERIPHR_MAX_NUM 1 // ACL peripheral maximum number
-#define MAX_TARGET_MAC_NUM 1
+#define MAX_TARGET_MAC_NUM  1
 ///////////////////////// Feature Configuration////////////////////////////////////////////////
 #define ACL_PERIPHR_SMP_ENABLE        0 //1 for smp,  0 no security
 #define ACL_CENTRAL_SMP_ENABLE        0 //1 for smp,  0 no security
 #define ACL_CENTRAL_SIMPLE_SDP_ENABLE 1 //simple service discovery for ACL central
 #define BLE_OTA_SERVER_ENABLE         1
-
 
 #define ZHIYAN_LIGHT_EN               1
 
@@ -117,8 +116,8 @@
 // 选择一个 UART（示例 UART0，按你的板卡改）
 #define UART_MODULE_SEL UART1
 // TL321X 的 TX/RX 引脚宏（按你工程里现成的宏替换）
-#define UART_TX_PIN     GPIO_PC4
-#define UART_RX_PIN     GPIO_PC5
+#define UART_TX_PIN     GPIO_PC6
+#define UART_RX_PIN     GPIO_PC7
 
 // 选择一个 TX DMA 通道（按 demo 一致）
 #define UART_TX_DMA_CHN DMA3

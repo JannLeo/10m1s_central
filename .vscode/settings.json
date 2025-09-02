@@ -20,6 +20,7 @@
         "drivers.h": "c",
         "flash.h": "c",
         "hal_flash.h": "c",
-        "flash_base.h": "c"
+        "flash_base.h": "c",
+        "app_conn_test.h": "c"
     }
 }

@@ -29,12 +29,6 @@
 //when the data bit width is selected as 20bit,
 //you can define a buf with the same size of the signed int type for use.
 signed short AUDIO_BUFF[AUDIO_BUFF_SIZE >> 1] __attribute__((aligned(4)));
-// sdm_pin_config_t sdm_pin_config = {
-//     .sdm0_p_pin = GPIO_FC_PD5,
-//     .sdm0_n_pin = GPIO_FC_PE2,
-//     .sdm1_p_pin = GPIO_FC_PE3,
-//     .sdm1_n_pin = GPIO_FC_PA0, //Both the SDM and printf print functions use the PA0 pin. If the SDM function is used, modify the pin used for DEBUG_INFO_TX_PIN in printf.h.
-// };
 
 
 
@@ -58,7 +52,7 @@ void user_init_codec(void)
 
     audio_init();
             /****setting the amic bias pin****/
-    audio_set_amic_bias_pin(GPIO_PB4);
+    audio_set_amic_bias_pin(GPIO_PC2);
     /****stream0 line in/amic/dmic init****/
     audio_codec_stream0_input_init(&audio_codec_stream0_input);
     /****line output init****/
