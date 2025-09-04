@@ -874,7 +874,7 @@ _attribute_no_inline_ void user_init_normal(void)
     blc_ll_setScanParameter(SCAN_TYPE_PASSIVE, SCAN_INTERVAL_100MS, SCAN_WINDOW_100MS, OWN_ADDRESS_PUBLIC, SCAN_FP_ALLOW_ADV_ANY);
     blc_ll_setScanEnable(BLC_SCAN_ENABLE, DUP_FILTER_DISABLE);
 
-     rf_set_power_level_index(RF_POWER_INDEX_P11p33dBm);
+     rf_set_power_level_index(RF_POWER_INDEX_P8p03dBm);
 
 #if (BLE_APP_PM_ENABLE)
     blc_ll_initPowerManagement_module();

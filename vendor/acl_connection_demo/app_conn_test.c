@@ -4,7 +4,7 @@
  * @brief   BLE connection test module source file
  *
  * @author  BLE GROUP
- * @date    06,2025
+ * @date    08,2025
  *
  * @par     Copyright (c) 2022, Telink Semiconductor (Shanghai) Co., Ltd. ("TELINK")
  *
@@ -29,7 +29,7 @@
 
 /* Constants */
 #define PWM_CMD_OUT_DP_H         61
-#define SEND_RGB_SIGNAL_TIMES    3
+#define SEND_RGB_SIGNAL_TIMES    6
 #define MAX_TEST_DATA_SIZE       20
 #define FIFO_THRESHOLD           2
 
@@ -72,7 +72,7 @@ bool judge_conn_state(void) {
  */
 _attribute_ram_code_
 int app_acl_central_post_event_callback(void) {
-    if (conn_flag && xor_flag) {
+    if (conn_flag) {
         gpio_set_high_level(TEST_GPIO);
         
         /* Process all connected devices */
