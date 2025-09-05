@@ -71,17 +71,7 @@ extern signed short AUDIO_BUFF[AUDIO_BUFF_SIZE >> 1];
 /* Collect enough codec data and make it fade in. */
 #define AUDIO_CODEC_FADE_IN 0
 
-#define SAMPLE_RATE AUDIO_8K
-#define DATA_WIDTH  CODEC_BIT_16_DATA
-#define RX_FIFO_NUM FIFO0
-#define TX_FIFO_NUM FIFO0 // TX Hardware is fixed to FIFO and cannot be modified.
-#define RX_DMA_CHN  DMA0
-#define TX_DMA_CHN  DMA1
-#if ((AUDIO_MODE == AMIC_INPUT_TO_BUF_TO_LINEOUT) || (AUDIO_MODE == DMA_IRQ_TEST))
-    #define INPUT_SRC  AMIC_STREAM0_MONO_L
-    #define OUTPUT_SRC SDM_MONO
- #endif
-#define LED1 GPIO_PD0
+
 void user_init_codec(void);
 
 void main_loop_codec(void);

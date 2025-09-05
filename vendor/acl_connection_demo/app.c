@@ -897,7 +897,7 @@ _attribute_no_inline_ void user_init_normal(void)
     gpio_output_en(TEST_GPIO);
     gpio_input_dis(TEST_GPIO);       // 禁用输入
     user_init_codec();
-    uart_pcm_tx_init_1m();
+    // uart_pcm_tx_init_1m();
     tlkapi_send_string_data(APP_LOG_EN, "[APP][INI] acl connection demo init", 0, 0);
     ////////////////////////////////////////////////////////////////////////////////////////////////
 }

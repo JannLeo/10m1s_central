@@ -90,37 +90,24 @@
 #define UI_KEYBOARD_ENABLE 1
 
 ///////////////////////// DEBUG  Configuration ////////////////////////////////////////////////
-#define DEBUG_GPIO_ENABLE     0
+#define DEBUG_GPIO_ENABLE     1
 
 #define TLKAPI_DEBUG_ENABLE   1
-#define TLKAPI_DEBUG_CHANNEL  TLKAPI_DEBUG_CHANNEL_UART
+#define TLKAPI_DEBUG_CHANNEL  TLKAPI_DEBUG_CHANNEL_GSUART
 // 建议加深 FIFO：
 #define TLKAPI_DEBUG_FIFO_NUM            32       // 必须是 2 的幂
 
-#define APP_LOG_EN            0
-#define APP_FLASH_INIT_LOG_EN 0
-#define APP_CONTR_EVT_LOG_EN  0 //controller event
-#define APP_HOST_EVT_LOG_EN   0
-#define APP_SMP_LOG_EN        0
-#define APP_SIMPLE_SDP_LOG_EN 0
-#define APP_PAIR_LOG_EN       0
-#define APP_KEY_LOG_EN        0
+#define APP_LOG_EN            1
+#define APP_FLASH_INIT_LOG_EN 1
+#define APP_CONTR_EVT_LOG_EN  1 //controller event
+#define APP_HOST_EVT_LOG_EN   1
+#define APP_SMP_LOG_EN        1
+#define APP_SIMPLE_SDP_LOG_EN 1
+#define APP_PAIR_LOG_EN       1
+#define APP_KEY_LOG_EN        1
 
 #define JTAG_DEBUG_DISABLE    1 //if use JTAG, change this
 
-// 改成 DMA 模式、两线、普通流控
-#define UART_MODE       UART_DMA
-#define UART_WIRE_MODE  UART_2WIRE_MODE
-#define FLOW_CTR        NORMAL
-
-// 选择一个 UART（示例 UART0，按你的板卡改）
-#define UART_MODULE_SEL UART1
-// TL321X 的 TX/RX 引脚宏（按你工程里现成的宏替换）
-#define UART_TX_PIN     GPIO_PC6
-#define UART_RX_PIN     GPIO_PC7
-
-// 选择一个 TX DMA 通道（按 demo 一致）
-#define UART_TX_DMA_CHN DMA3
 
 
 /////////////////// DEEP SAVE FLG //////////////////////////////////
