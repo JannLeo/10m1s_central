@@ -160,6 +160,7 @@ _attribute_ram_code_ int main(void)
 
     while (1) {
         main_loop();
+        // main_loop_codec();
         app_conn_test_mainloop();
     }
 

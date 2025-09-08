@@ -88,14 +88,13 @@
 
 ///////////////////////// UI Configuration ////////////////////////////////////////////////////
 #define UI_LED_ENABLE      1
-#define UI_KEYBOARD_ENABLE 1
+#define UI_KEYBOARD_ENABLE 0
 
 ///////////////////////// DEBUG  Configuration ////////////////////////////////////////////////
 #define DEBUG_GPIO_ENABLE     0
 
 #define TLKAPI_DEBUG_ENABLE   1
-#define TLKAPI_DEBUG_CHANNEL  TLKAPI_DEBUG_CHANNEL_UART
-
+#define TLKAPI_DEBUG_CHANNEL  TLKAPI_DEBUG_CHANNEL_GSUART
 #define APP_LOG_EN            1
 #define APP_FLASH_INIT_LOG_EN 1
 #define APP_CONTR_EVT_LOG_EN  1 //controller event

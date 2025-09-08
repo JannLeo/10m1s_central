@@ -55,22 +55,14 @@ void user_init_codec(void)
     audio_set_amic_bias_pin(GPIO_PC2);
     /****stream0 line in/amic/dmic init****/
     audio_codec_stream0_input_init(&audio_codec_stream0_input);
-    /****line output init****/
-
-    // audio_codec_stream_output_init(&audio_stream_output);
 
     /****rx tx dma init****/
     audio_rx_dma_chain_init(audio_codec_stream0_input.fifo_chn, audio_codec_stream0_input.dma_num, (unsigned short *)audio_codec_stream0_input.data_buf, audio_codec_stream0_input.data_buf_size);
-    // audio_tx_dma_chain_init(TX_FIFO_NUM, audio_stream_output.dma_num, (unsigned short *)audio_stream_output.data_buf, audio_stream_output.data_buf_size);
-        /****audio starts run****/
     dma_clr_irq_mask(RX_DMA_CHN, TC_MASK | ERR_MASK | ABT_MASK);
     audio_mic_mute_en(); 
     audio_codec_stream0_input_en(audio_codec_stream0_input.dma_num); /* Step2 - enable audio codec */
     audio_codec_clr_input_pop(20);
     audio_codec_input_path_en(audio_codec_stream0_input.fifo_chn); /* Step4 - enable codec input path, codec data come in */
-    // audio_stream0_fade_dig_gain(CODEC_IN_D_GAIN_m6_DB);
-    // audio_set_sdm_pin(&sdm_pin_config);
-    // audio_codec_stream_output_en(audio_stream_output.dma_num);
     
     audio_set_adc_pga_gain(CODEC_IN_GAIN_21P0_DB);      // 20 dB
     audio_set_stream0_dig_gain(CODEC_IN_D_GAIN_0_DB); // +6 dB
