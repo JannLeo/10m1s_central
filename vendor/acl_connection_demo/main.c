@@ -26,6 +26,8 @@
 #include "stack/ble/ble.h"
 #include "app.h"
 #include "app_config.h"
+#include "app_codec.h"
+#include "app_record_test.h"
 #include "app_conn_test.h"
 
 #if (FREERTOS_ENABLE)
