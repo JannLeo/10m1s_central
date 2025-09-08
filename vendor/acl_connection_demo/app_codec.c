@@ -63,6 +63,7 @@ void user_init_codec(void)
     audio_rx_dma_chain_init(audio_codec_stream0_input.fifo_chn, audio_codec_stream0_input.dma_num, (unsigned short *)audio_codec_stream0_input.data_buf, audio_codec_stream0_input.data_buf_size);
     // audio_tx_dma_chain_init(TX_FIFO_NUM, audio_stream_output.dma_num, (unsigned short *)audio_stream_output.data_buf, audio_stream_output.data_buf_size);
         /****audio starts run****/
+    dma_clr_irq_mask(RX_DMA_CHN, TC_MASK | ERR_MASK | ABT_MASK);
     audio_mic_mute_en(); 
     audio_codec_stream0_input_en(audio_codec_stream0_input.dma_num); /* Step2 - enable audio codec */
     audio_codec_clr_input_pop(20);

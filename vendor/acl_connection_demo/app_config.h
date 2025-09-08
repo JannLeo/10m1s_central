@@ -29,7 +29,7 @@
 
 #define ACL_CENTRAL_MAX_NUM 10 // ACL central maximum number
 #define ACL_PERIPHR_MAX_NUM 1 // ACL peripheral maximum number
-#define MAX_TARGET_MAC_NUM  1
+#define MAX_TARGET_MAC_NUM  10
 ///////////////////////// Feature Configuration////////////////////////////////////////////////
 #define ACL_PERIPHR_SMP_ENABLE        0 //1 for smp,  0 no security
 #define ACL_CENTRAL_SMP_ENABLE        0 //1 for smp,  0 no security
@@ -93,7 +93,7 @@
 #define DEBUG_GPIO_ENABLE     1
 
 #define TLKAPI_DEBUG_ENABLE   1
-#define TLKAPI_DEBUG_CHANNEL  TLKAPI_DEBUG_CHANNEL_GSUART
+#define TLKAPI_DEBUG_CHANNEL  TLKAPI_DEBUG_CHANNEL_UART
 // 建议加深 FIFO：
 #define TLKAPI_DEBUG_FIFO_NUM            32       // 必须是 2 的幂
 
