@@ -30,17 +30,7 @@
 //you can define a buf with the same size of the signed int type for use.
 signed short AUDIO_BUFF[AUDIO_BUFF_SIZE >> 1] __attribute__((aligned(4)));
 
-#define SAMPLE_RATE AUDIO_8K
-#define DATA_WIDTH  CODEC_BIT_16_DATA
-#define RX_FIFO_NUM FIFO0
-#define TX_FIFO_NUM FIFO0 // TX Hardware is fixed to FIFO and cannot be modified.
-#define RX_DMA_CHN  DMA4
-#define TX_DMA_CHN  DMA5
-#if ((AUDIO_MODE == AMIC_INPUT_TO_BUF_TO_LINEOUT) || (AUDIO_MODE == DMA_IRQ_TEST))
-    #define INPUT_SRC  AMIC_STREAM0_MONO_L
-    #define OUTPUT_SRC SDM_MONO
- #endif
-#define LED1 GPIO_PD0
+
 
 
 audio_codec_stream0_input_t audio_codec_stream0_input =
@@ -96,4 +86,3 @@ void main_loop_codec(void)
     printf("dma_irq_ptr_test[0]=%d, dma_irq_ptr_test[1]=%d\r\n", dma_irq_ptr_test[0], dma_irq_ptr_test[1]);
 
 }
-

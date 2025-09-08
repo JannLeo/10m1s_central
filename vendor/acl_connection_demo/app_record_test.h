@@ -27,8 +27,6 @@
 extern "C" {
 #endif
 
-void main_loop_record_test(void);
-void uart_pcm_tx_init_1m(void);
 
 #ifdef __cplusplus
 }

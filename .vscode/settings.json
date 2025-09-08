@@ -21,6 +21,8 @@
         "flash.h": "c",
         "hal_flash.h": "c",
         "flash_base.h": "c",
-        "app_conn_test.h": "c"
+        "app_conn_test.h": "c",
+        "tlkapi_debug.h": "c",
+        "dma.h": "c"
     }
 }

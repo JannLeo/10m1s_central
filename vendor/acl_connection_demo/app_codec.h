@@ -34,6 +34,18 @@ extern "C"
 #define AUDIO_BUFF_SIZE 4096 * 2 /* In order to support codec data fade-in process, define enough buff */
 extern signed short AUDIO_BUFF[AUDIO_BUFF_SIZE >> 1];
 
+#define SAMPLE_RATE AUDIO_8K
+#define DATA_WIDTH  CODEC_BIT_16_DATA
+#define RX_FIFO_NUM FIFO0
+#define TX_FIFO_NUM FIFO0 // TX Hardware is fixed to FIFO and cannot be modified.
+#define RX_DMA_CHN  DMA4
+#define TX_DMA_CHN  DMA5
+#if ((AUDIO_MODE == AMIC_INPUT_TO_BUF_TO_LINEOUT) || (AUDIO_MODE == DMA_IRQ_TEST))
+    #define INPUT_SRC  AMIC_STREAM0_MONO_L
+    #define OUTPUT_SRC SDM_MONO
+ #endif
+#define LED1 GPIO_PD0
+
 /* audio codec case */
 #define LINE_INPUT_TO_BUF_TO_LINEOUT 1 //line_in->buff->SDM out
 #define AMIC_INPUT_TO_BUF_TO_LINEOUT 2 //amic_in->buff->SDM out
