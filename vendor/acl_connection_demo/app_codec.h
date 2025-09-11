@@ -31,7 +31,7 @@ extern "C"
 
 #include "driver.h"
 
-#define AUDIO_BUFF_SIZE 4096 * 2 /* In order to support codec data fade-in process, define enough buff */
+#define AUDIO_BUFF_SIZE 2048 * 2 /* In order to support codec data fade-in process, define enough buff */
 extern signed short AUDIO_BUFF[AUDIO_BUFF_SIZE >> 1];
 
 #define SAMPLE_RATE AUDIO_8K

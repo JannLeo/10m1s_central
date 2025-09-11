@@ -26,7 +26,7 @@
 #include "drivers.h"
 #include "stack/ble/ble.h"
 #include "app.h"
-
+#include "app_config.h"
 /* Constants */
 #define PWM_CMD_OUT_DP_H         61
 #define SEND_RGB_SIGNAL_TIMES    6
