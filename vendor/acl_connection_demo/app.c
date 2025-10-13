@@ -47,8 +47,10 @@ u8 test_target_mac[10][6] = {
     {0x09, 0x22, 0x33, 0x44, 0x55, 0x66},
 };
 u8 test_target_mac_num = 0;
-
-
+#define SYNC_CMD_OUT_DP_H         66
+static const uint16_t sync_offsets_us[10] = {
+    12500, 6250, 8750, 2500, 11250, 5000, 10000, 3750, 7500, 1250
+};
 /**
  * @brief   BLE Advertising data
  */
@@ -233,6 +235,19 @@ int app_le_connection_complete_event_handle(u8 *p)
             }
 #endif
         }
+    uint8_t conn_index = (pConnEvt->connHandle & 0x0F) % 10;
+    // tlkapi_send_string_data(APP_LOG_EN, "[APP][CMD] conn_index =", &conn_index, 1);
+    // tlkapi_send_string_data(APP_LOG_EN, "[APP][CMD] sync_offsets_us[conn_index] =", &sync_offsets_us[conn_index], 2);
+    /* Send test data pattern */
+        ble_sts_t status = blc_gatt_pushWriteCommand(
+            pConnEvt->connHandle, 
+            SYNC_CMD_OUT_DP_H, 
+            (u8 *)&sync_offsets_us[conn_index], 
+            2
+        );
+    if (status != BLE_SUCCESS) {
+        tlkapi_send_string_data(APP_LOG_EN, "[APP][CMD] Write command failed", &pConnEvt->connHandle, sizeof(hci_le_connectionCompleteEvt_t) - 2);
+    }
     }
 
     return 0;
@@ -896,7 +911,7 @@ _attribute_no_inline_ void user_init_normal(void)
     gpio_function_en(TEST_GPIO);
     gpio_output_en(TEST_GPIO);
     gpio_input_dis(TEST_GPIO);       // 禁用输入
-    user_init_codec();
+    // user_init_codec();
     // uart_pcm_tx_init_1m();
     tlkapi_send_string_data(APP_LOG_EN, "[APP][INI] acl connection demo init", 0, 0);
     ////////////////////////////////////////////////////////////////////////////////////////////////
